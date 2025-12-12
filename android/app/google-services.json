@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "978444733436",
+    "project_id": "alrafq-2025",
+    "storage_bucket": "alrafq-2025.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:978444733436:android:92498436f6f4f51bbd4079",
+        "android_client_info": {
+          "package_name": "com.example.alrafiq"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "978444733436-796r08uuq929ca3qef17pl1et6a0vp84.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAR5rn70vX5VzPTtjhnQsvl1h03KKpQ4sk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "978444733436-796r08uuq929ca3qef17pl1et6a0vp84.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "978444733436-2mkjng0k27m97ruq2dl0nl1kfvc8038d.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.rafiq"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:978444733436:android:fa174d845a285d6fbd4079",
+        "android_client_info": {
+          "package_name": "com.example.rafiq"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "978444733436-796r08uuq929ca3qef17pl1et6a0vp84.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAR5rn70vX5VzPTtjhnQsvl1h03KKpQ4sk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "978444733436-796r08uuq929ca3qef17pl1et6a0vp84.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "978444733436-2mkjng0k27m97ruq2dl0nl1kfvc8038d.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.rafiq"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
