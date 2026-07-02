@@ -11,12 +11,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_localizations:
-    sdk: flutter
 
   # Core Islamic Data Packages
   quran: ^1.4.0              # Complete Quran data, translations & audio
-  hadith: ^1.0.1             # All major hadith collections
   adhan: ^2.0.0+1        # Prayer time calculations
   hijri: ^3.0.0              # Hijri calendar
 
@@ -28,35 +25,20 @@ dependencies:
   # Audio & Media
   audioplayers: ^6.0.0       # Audio playback for Quran
   flutter_tts: ^4.0.2        # Text-to-speech for Quran
-  just_audio: ^0.10.5        # Advanced audio features
 
-  # Location & Notifications
+  # Location
   geolocator: ^13.0.4        # GPS location
-  permission_handler: ^12.0.1 # Handle runtime permissions (ADDED)
   flutter_compass: ^0.8.0    # Compass for Qibla
-  flutter_qiblah: ^3.1.0+1    # Dedicated Qibla direction (ADDED)
-  flutter_local_notifications: ^19.5.0 # Prayer reminders
-  timezone: ^0.10.1           # Time zone handling
 
-  # Maps & UI
-  flutter_map: ^8.2.2        # Interactive maps
-  latlong2: ^0.9.1           # Latitude/longitude utilities
-  http: ^1.2.2               # API calls for maps/places
+  # Networking & UI
+  http: ^1.2.2               # API calls for the backend
   intl: ^0.20.2              # Date formatting
+  path_provider: ^2.1.4      # Local cache storage
 
   # Utilities
   vibration: ^3.1.4          # Haptic feedback
-  arabic_numbers: ^1.0.0      # Arabic number formatting
-  path_provider: ^2.1.4      # File storage paths
   share_plus: ^12.0.1        # Social sharing
-  url_launcher: ^6.3.1       # Launch URLs/phone calls
-
-  # Authentication
-  firebase_core: ^4.2.1
-  firebase_auth: ^6.1.2
-  cloud_firestore: ^6.1.0
-  google_sign_in: ^7.2.0
-  flutter_riverpod: ^2.4.9
+  google_fonts: ^8.1.0
 
 dev_dependencies:
   flutter_test:

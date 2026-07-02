@@ -27,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen>
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      duration: const Duration(milliseconds: 1500),
+      duration: const Duration(milliseconds: 600),
       vsync: this,
     );
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
@@ -70,123 +70,96 @@ class _LoginScreenState extends State<LoginScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              const Color(0xFF0D6E6E),
-              const Color(0xFF128C7E),
-              const Color(0xFF075E54),
-            ],
-          ),
-        ),
-        child: SafeArea(
-          child: Center(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(24),
-              child: FadeTransition(
-                opacity: _fadeAnimation,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Logo & Title
-                    Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.2),
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.mosque_rounded,
-                        size: 60,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 24),
-                    const Text(
-                      'Rafiq',
-                      style: TextStyle(
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        letterSpacing: 2,
-                      ),
-                    ),
-                    const Text(
-                      'Your Islamic Companion',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white70,
-                      ),
-                    ),
-                    const SizedBox(height: 48),
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
-                    // Login Card
-                    Container(
-                      padding: const EdgeInsets.all(32),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(24),
-                        border: Border.all(
-                          color: Colors.white.withValues(alpha: 0.2),
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.1),
-                            blurRadius: 20,
-                            spreadRadius: 5,
-                          ),
-                        ],
-                      ),
+    return Scaffold(
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(24),
+            child: FadeTransition(
+              opacity: _fadeAnimation,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Logo & Title
+                  CircleAvatar(
+                    radius: 50,
+                    backgroundColor: colorScheme.primary,
+                    child: Icon(
+                      Icons.mosque_rounded,
+                      size: 56,
+                      color: colorScheme.onPrimary,
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  Text(
+                    'Rafiq',
+                    style: theme.textTheme.headlineLarge?.copyWith(
+                      fontWeight: FontWeight.w700,
+                      color: colorScheme.onSurface,
+                      letterSpacing: 1.2,
+                    ),
+                  ),
+                  Text(
+                    'Your Islamic Companion',
+                    style: theme.textTheme.bodyLarge?.copyWith(
+                      color: colorScheme.onSurface.withValues(alpha: 0.64),
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+
+                  // Login Card
+                  Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(28),
                       child: Form(
                         key: _formKey,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            const Text(
+                            Text(
                               'Welcome Back',
-                              style: TextStyle(
-                                fontSize: 28,
+                              style: theme.textTheme.headlineSmall?.copyWith(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white,
                               ),
                               textAlign: TextAlign.center,
                             ),
                             const SizedBox(height: 8),
-                            const Text(
+                            Text(
                               'Sign in to continue your journey',
                               style: TextStyle(
                                 fontSize: 14,
-                                color: Colors.white70,
+                                color:
+                                    colorScheme.onSurface.withValues(alpha: 0.6),
                               ),
                               textAlign: TextAlign.center,
                             ),
-                            const SizedBox(height: 32),
+                            const SizedBox(height: 28),
 
                             // Error Message
                             if (_errorMessage != null) ...[
                               Container(
                                 padding: const EdgeInsets.all(12),
                                 decoration: BoxDecoration(
-                                  color: Colors.red.withValues(alpha: 0.2),
+                                  color: colorScheme.error.withValues(alpha: 0.1),
                                   borderRadius: BorderRadius.circular(12),
                                   border: Border.all(
-                                      color: Colors.red.withValues(alpha: 0.5)),
+                                    color:
+                                        colorScheme.error.withValues(alpha: 0.4),
+                                  ),
                                 ),
                                 child: Row(
                                   children: [
-                                    const Icon(Icons.error_outline,
-                                        color: Colors.red),
+                                    Icon(Icons.error_outline,
+                                        color: colorScheme.error),
                                     const SizedBox(width: 12),
                                     Expanded(
                                       child: Text(
                                         _errorMessage!,
                                         style:
-                                            const TextStyle(color: Colors.red),
+                                            TextStyle(color: colorScheme.error),
                                       ),
                                     ),
                                   ],
@@ -199,36 +172,9 @@ class _LoginScreenState extends State<LoginScreen>
                             TextFormField(
                               controller: _emailController,
                               keyboardType: TextInputType.emailAddress,
-                              style: const TextStyle(color: Colors.white),
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 labelText: 'Email',
-                                labelStyle:
-                                    const TextStyle(color: Colors.white70),
-                                prefixIcon: const Icon(Icons.email_outlined,
-                                    color: Colors.white70),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(16),
-                                  borderSide: BorderSide(
-                                      color:
-                                          Colors.white.withValues(alpha: 0.3)),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(16),
-                                  borderSide: const BorderSide(
-                                      color: Colors.white, width: 2),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(16),
-                                  borderSide:
-                                      const BorderSide(color: Colors.red),
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(16),
-                                  borderSide: const BorderSide(
-                                      color: Colors.red, width: 2),
-                                ),
-                                filled: true,
-                                fillColor: Colors.white.withValues(alpha: 0.1),
+                                prefixIcon: Icon(Icons.email_outlined),
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
@@ -246,46 +192,18 @@ class _LoginScreenState extends State<LoginScreen>
                             TextFormField(
                               controller: _passwordController,
                               obscureText: _obscurePassword,
-                              style: const TextStyle(color: Colors.white),
                               decoration: InputDecoration(
                                 labelText: 'Password',
-                                labelStyle:
-                                    const TextStyle(color: Colors.white70),
-                                prefixIcon: const Icon(Icons.lock_outline,
-                                    color: Colors.white70),
+                                prefixIcon: const Icon(Icons.lock_outline),
                                 suffixIcon: IconButton(
                                   icon: Icon(
                                     _obscurePassword
                                         ? Icons.visibility_off
                                         : Icons.visibility,
-                                    color: Colors.white70,
                                   ),
                                   onPressed: () => setState(() =>
                                       _obscurePassword = !_obscurePassword),
                                 ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(16),
-                                  borderSide: BorderSide(
-                                      color:
-                                          Colors.white.withValues(alpha: 0.3)),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(16),
-                                  borderSide: const BorderSide(
-                                      color: Colors.white, width: 2),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(16),
-                                  borderSide:
-                                      const BorderSide(color: Colors.red),
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(16),
-                                  borderSide: const BorderSide(
-                                      color: Colors.red, width: 2),
-                                ),
-                                filled: true,
-                                fillColor: Colors.white.withValues(alpha: 0.1),
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
@@ -297,7 +215,7 @@ class _LoginScreenState extends State<LoginScreen>
                                 return null;
                               },
                             ),
-                            const SizedBox(height: 16),
+                            const SizedBox(height: 8),
 
                             // Remember Me & Forgot Password
                             Row(
@@ -312,16 +230,10 @@ class _LoginScreenState extends State<LoginScreen>
                                         value: _rememberMe,
                                         onChanged: (value) => setState(
                                             () => _rememberMe = value ?? true),
-                                        fillColor: WidgetStateProperty.all(
-                                            Colors.white
-                                                .withValues(alpha: 0.3)),
-                                        checkColor: Colors.white,
                                       ),
                                     ),
                                     const SizedBox(width: 8),
-                                    const Text('Remember me',
-                                        style:
-                                            TextStyle(color: Colors.white70)),
+                                    const Text('Remember me'),
                                   ],
                                 ),
                                 TextButton(
@@ -332,34 +244,25 @@ class _LoginScreenState extends State<LoginScreen>
                                               'Password reset coming soon!')),
                                     );
                                   },
-                                  child: const Text(
-                                    'Forgot Password?',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
+                                  child: const Text('Forgot Password?'),
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 24),
+                            const SizedBox(height: 16),
 
                             // Login Button
                             SizedBox(
-                              height: 56,
+                              height: 52,
                               child: ElevatedButton(
                                 onPressed: _isLoading ? null : _handleLogin,
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.white,
-                                  foregroundColor: const Color(0xFF0D6E6E),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                  elevation: 0,
-                                ),
                                 child: _isLoading
                                     ? const SizedBox(
                                         width: 24,
                                         height: 24,
                                         child: CircularProgressIndicator(
-                                            strokeWidth: 2),
+                                          strokeWidth: 2,
+                                          color: Colors.white,
+                                        ),
                                       )
                                     : const Text(
                                         'Sign In',
@@ -374,52 +277,46 @@ class _LoginScreenState extends State<LoginScreen>
                         ),
                       ),
                     ),
-                    const SizedBox(height: 32),
+                  ),
+                  const SizedBox(height: 24),
 
-                    // Sign Up Link
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          "Don't have an account? ",
-                          style: TextStyle(color: Colors.white70),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) => const SignupScreen()),
-                            );
-                          },
-                          child: const Text(
-                            'Sign Up',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    const SizedBox(height: 24),
-
-                    // Skip for now (Guest mode)
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pushReplacementNamed('/home');
-                      },
-                      child: const Text(
-                        'Continue as Guest',
-                        style: TextStyle(
-                          color: Colors.white54,
-                          decoration: TextDecoration.underline,
+                  // Sign Up Link
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("Don't have an account? "),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const SignupScreen()),
+                          );
+                        },
+                        child: const Text(
+                          'Sign Up',
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  // Skip for now (Guest mode)
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pushReplacementNamed('/home');
+                    },
+                    child: Text(
+                      'Continue as Guest',
+                      style: TextStyle(
+                        color: colorScheme.onSurface.withValues(alpha: 0.6),
+                        decoration: TextDecoration.underline,
+                      ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),

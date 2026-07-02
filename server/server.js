@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -8,8 +10,13 @@ const app = express();
 
 // Configuration
 const PORT = process.env.PORT || 3000;
-const JWT_SECRET = process.env.JWT_SECRET || 'rafiq-app-secret-key-2024';
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/rafiq';
+
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+    console.error('❌ JWT_SECRET is not set. Add it to server/.env before starting the server.');
+    process.exit(1);
+}
 
 // Middleware
 app.use(cors());
@@ -212,6 +219,21 @@ app.put('/api/auth/preferences', authenticateToken, async (req, res) => {
         console.error('Update preferences error:', error);
         res.status(500).json({ error: 'Server error' });
     }
+});
+
+// Root endpoint for API overview
+app.get('/', (req, res) => {
+    res.json({
+        status: 'ok',
+        message: 'Rafiq backend API is running',
+        endpoints: {
+            health: '/api/health',
+            signup: 'POST /api/auth/signup',
+            login: 'POST /api/auth/login',
+            me: 'GET /api/auth/me',
+            verify: 'GET /api/auth/verify'
+        }
+    });
 });
 
 // Health Check

@@ -29,7 +29,7 @@ class _SignupScreenState extends State<SignupScreen>
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      duration: const Duration(milliseconds: 1200),
+      duration: const Duration(milliseconds: 500),
       vsync: this,
     );
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
@@ -80,80 +80,53 @@ class _SignupScreenState extends State<SignupScreen>
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [
-              const Color(0xFF128C7E),
-              const Color(0xFF0D6E6E),
-              const Color(0xFF054D40),
-            ],
-          ),
-        ),
-        child: SafeArea(
-          child: Center(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(24),
-              child: FadeTransition(
-                opacity: _fadeAnimation,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Back Button
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: IconButton(
-                        icon: const Icon(Icons.arrow_back_ios,
-                            color: Colors.white),
-                        onPressed: () => Navigator.pop(context),
-                      ),
+      appBar: AppBar(
+        title: const Text('Create Account'),
+        backgroundColor: Colors.transparent,
+        foregroundColor: colorScheme.onSurface,
+        elevation: 0,
+      ),
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(24),
+            child: FadeTransition(
+              opacity: _fadeAnimation,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    radius: 40,
+                    backgroundColor: colorScheme.primary,
+                    child: Icon(
+                      Icons.person_add_rounded,
+                      size: 42,
+                      color: colorScheme.onPrimary,
                     ),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Create Account',
+                    style: theme.textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  Text(
+                    'Join the Rafiq community',
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: colorScheme.onSurface.withValues(alpha: 0.64),
+                    ),
+                  ),
+                  const SizedBox(height: 28),
 
-                    // Logo
-                    Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.2),
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.person_add_rounded,
-                        size: 45,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    const Text(
-                      'Create Account',
-                      style: TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const Text(
-                      'Join the Rafiq community',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.white70,
-                      ),
-                    ),
-                    const SizedBox(height: 32),
-
-                    // Signup Card
-                    Container(
-                      padding: const EdgeInsets.all(28),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(24),
-                        border: Border.all(
-                          color: Colors.white.withValues(alpha: 0.2),
-                        ),
-                      ),
+                  // Signup Card
+                  Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(24),
                       child: Form(
                         key: _formKey,
                         child: Column(
@@ -164,21 +137,24 @@ class _SignupScreenState extends State<SignupScreen>
                               Container(
                                 padding: const EdgeInsets.all(12),
                                 decoration: BoxDecoration(
-                                  color: Colors.red.withValues(alpha: 0.2),
+                                  color:
+                                      colorScheme.error.withValues(alpha: 0.1),
                                   borderRadius: BorderRadius.circular(12),
                                   border: Border.all(
-                                      color: Colors.red.withValues(alpha: 0.5)),
+                                    color: colorScheme.error
+                                        .withValues(alpha: 0.4),
+                                  ),
                                 ),
                                 child: Row(
                                   children: [
-                                    const Icon(Icons.error_outline,
-                                        color: Colors.red),
+                                    Icon(Icons.error_outline,
+                                        color: colorScheme.error),
                                     const SizedBox(width: 12),
                                     Expanded(
                                       child: Text(
                                         _errorMessage!,
-                                        style:
-                                            const TextStyle(color: Colors.red),
+                                        style: TextStyle(
+                                            color: colorScheme.error),
                                       ),
                                     ),
                                   ],
@@ -190,11 +166,10 @@ class _SignupScreenState extends State<SignupScreen>
                             // Name Field
                             TextFormField(
                               controller: _nameController,
-                              style: const TextStyle(color: Colors.white),
                               textCapitalization: TextCapitalization.words,
-                              decoration: _buildInputDecoration(
-                                label: 'Full Name',
-                                icon: Icons.person_outline,
+                              decoration: const InputDecoration(
+                                labelText: 'Full Name',
+                                prefixIcon: Icon(Icons.person_outline),
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
@@ -212,10 +187,9 @@ class _SignupScreenState extends State<SignupScreen>
                             TextFormField(
                               controller: _emailController,
                               keyboardType: TextInputType.emailAddress,
-                              style: const TextStyle(color: Colors.white),
-                              decoration: _buildInputDecoration(
-                                label: 'Email',
-                                icon: Icons.email_outlined,
+                              decoration: const InputDecoration(
+                                labelText: 'Email',
+                                prefixIcon: Icon(Icons.email_outlined),
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
@@ -234,16 +208,14 @@ class _SignupScreenState extends State<SignupScreen>
                             TextFormField(
                               controller: _passwordController,
                               obscureText: _obscurePassword,
-                              style: const TextStyle(color: Colors.white),
-                              decoration: _buildInputDecoration(
-                                label: 'Password',
-                                icon: Icons.lock_outline,
+                              decoration: InputDecoration(
+                                labelText: 'Password',
+                                prefixIcon: const Icon(Icons.lock_outline),
                                 suffixIcon: IconButton(
                                   icon: Icon(
                                     _obscurePassword
                                         ? Icons.visibility_off
                                         : Icons.visibility,
-                                    color: Colors.white70,
                                   ),
                                   onPressed: () => setState(() =>
                                       _obscurePassword = !_obscurePassword),
@@ -265,16 +237,14 @@ class _SignupScreenState extends State<SignupScreen>
                             TextFormField(
                               controller: _confirmPasswordController,
                               obscureText: _obscureConfirmPassword,
-                              style: const TextStyle(color: Colors.white),
-                              decoration: _buildInputDecoration(
-                                label: 'Confirm Password',
-                                icon: Icons.lock_outline,
+                              decoration: InputDecoration(
+                                labelText: 'Confirm Password',
+                                prefixIcon: const Icon(Icons.lock_outline),
                                 suffixIcon: IconButton(
                                   icon: Icon(
                                     _obscureConfirmPassword
                                         ? Icons.visibility_off
                                         : Icons.visibility,
-                                    color: Colors.white70,
                                   ),
                                   onPressed: () => setState(() =>
                                       _obscureConfirmPassword =
@@ -291,7 +261,7 @@ class _SignupScreenState extends State<SignupScreen>
                                 return null;
                               },
                             ),
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 16),
 
                             // Terms Checkbox
                             Row(
@@ -303,16 +273,6 @@ class _SignupScreenState extends State<SignupScreen>
                                     value: _acceptedTerms,
                                     onChanged: (value) => setState(
                                         () => _acceptedTerms = value ?? false),
-                                    fillColor: WidgetStateProperty.resolveWith(
-                                        (states) {
-                                      if (states
-                                          .contains(WidgetState.selected)) {
-                                        return Colors.white;
-                                      }
-                                      return Colors.white
-                                          .withValues(alpha: 0.3);
-                                    }),
-                                    checkColor: const Color(0xFF0D6E6E),
                                   ),
                                 ),
                                 const SizedBox(width: 12),
@@ -320,35 +280,29 @@ class _SignupScreenState extends State<SignupScreen>
                                   child: Text(
                                     'I agree to the Terms of Service and Privacy Policy',
                                     style: TextStyle(
-                                      color:
-                                          Colors.white.withValues(alpha: 0.8),
+                                      color: colorScheme.onSurface
+                                          .withValues(alpha: 0.7),
                                       fontSize: 13,
                                     ),
                                   ),
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 24),
+                            const SizedBox(height: 20),
 
                             // Signup Button
                             SizedBox(
-                              height: 56,
+                              height: 52,
                               child: ElevatedButton(
                                 onPressed: _isLoading ? null : _handleSignup,
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.white,
-                                  foregroundColor: const Color(0xFF0D6E6E),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                  elevation: 0,
-                                ),
                                 child: _isLoading
                                     ? const SizedBox(
                                         width: 24,
                                         height: 24,
                                         child: CircularProgressIndicator(
-                                            strokeWidth: 2),
+                                          strokeWidth: 2,
+                                          color: Colors.white,
+                                        ),
                                       )
                                     : const Text(
                                         'Create Account',
@@ -363,66 +317,29 @@ class _SignupScreenState extends State<SignupScreen>
                         ),
                       ),
                     ),
-                    const SizedBox(height: 24),
+                  ),
+                  const SizedBox(height: 20),
 
-                    // Already have account
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          "Already have an account? ",
-                          style: TextStyle(color: Colors.white70),
+                  // Already have account
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("Already have an account? "),
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text(
+                          'Sign In',
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: const Text(
-                            'Sign In',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),
         ),
       ),
-    );
-  }
-
-  InputDecoration _buildInputDecoration({
-    required String label,
-    required IconData icon,
-    Widget? suffixIcon,
-  }) {
-    return InputDecoration(
-      labelText: label,
-      labelStyle: const TextStyle(color: Colors.white70),
-      prefixIcon: Icon(icon, color: Colors.white70),
-      suffixIcon: suffixIcon,
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16),
-        borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.3)),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16),
-        borderSide: const BorderSide(color: Colors.white, width: 2),
-      ),
-      errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16),
-        borderSide: const BorderSide(color: Colors.red),
-      ),
-      focusedErrorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16),
-        borderSide: const BorderSide(color: Colors.red, width: 2),
-      ),
-      filled: true,
-      fillColor: Colors.white.withValues(alpha: 0.1),
     );
   }
 }
